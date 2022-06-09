@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     #My apps
     'accounts',
     'pages',
+    'learning',
+    'timeoff',
 
     #Third party
     'crispy_forms',

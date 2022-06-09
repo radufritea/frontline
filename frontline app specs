@@ -1,0 +1,92 @@
+/
+	landing page
+
+/accounts/
+	/login
+		email
+		password
+
+	/profile
+		Nume
+		Prenume
+		Email
+		Pozitie
+		Manager N+1
+		Manager N+2
+		Locatie
+		Echipa/Departament
+		Data angajarii
+		Zile concediu de odihna (default 21)
+
+	/add_user
+		first_name
+		last_name
+		email
+		password
+
+
+/concedii/
+(angajat)
+	/adauga_cerere
+		Tip de concediu
+		Data de start
+		Data de finish
+		Comentariu
+	/lista_cereri_personale
+		Tip de concediu
+		Data crearii
+		Interval
+		Status
+		Buton anulare
+	/balanta
+		Tip concediu
+		Zile utilizate
+		Zile disponibile
+
+	/anulare_cerere
+		Detalii cerere (vezi /adauga_cerere)
+		Motiv cerere de anulare
+
+(manager)
+	/adauga_cerere (ca angajatul)
+	/lista_cereri personale (ca angajatul)
+	/balanta
+		Balanta personala
+			Tip concediu
+			Zile utilizate
+			Zile disponibile
+		Balanta echipa
+			Nume membru echipa
+			Tip de concediu (zile disponibile)
+	/lista_cereri_echipa
+		Nume solicitant
+		Tip de concediu
+		Interval
+		Alte cereri in aceeasi perioada
+		Status: spre aprobare / aprobata / respinsa / spre anulare
+		if status == "spre aprobare" OR status == "spre anulare"
+			bold
+			Aprob
+			Resping
+
+(administrator)
+	/lista_toate_cererile
+		Nume solicitant
+		Tip de concediu
+		Interval
+		Status
+	/raport_general_concedii
+	(selector interval)
+		Angajat
+		Zile lucratoare
+		Zile lucrate
+		Concediu de odihna
+		Concediu medical
+		Concediu neplatit
+		etc.
+	/calendar_companie
+		(sort by employee, team, type)
+/pontaj/
+
+/learning/
+
