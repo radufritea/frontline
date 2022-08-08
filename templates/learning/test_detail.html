@@ -1,0 +1,148 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+{% include "nav.html" %}
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+<section class="bg-light py-0 py-sm-5">
+	<!-- Header: test title and details -->
+	<div class="container">
+		<div class="row py-5">
+			<div class="col-lg-8">
+				<!-- Badge -->
+				<h6 class="mb-3 font-base bg-primary text-white py-2 px-4 rounded-2 d-inline-block">Farmacologie</h6>
+				<!-- Title -->
+				<h1>{{ test.name }}</h1>
+				<p>{{ test.description }}</p>
+				<!-- Content -->
+				<ul class="list-inline mb-0">
+					<li class="list-inline-item h6 me-3 mb-1 mb-sm-0"><i class="fas fa-user-graduate text-orange me-2"></i>{{ test.duration }}</li>
+					<li class="list-inline-item h6 me-3 mb-1 mb-sm-0"><i class="fas fa-signal text-success me-2"></i>{{ test.questions_count }}</li>
+					<li class="list-inline-item h6 me-3 mb-1 mb-sm-0"><i class="bi bi-patch-exclamation-fill text-danger me-2"></i>15.08.2022 - 17.08.2022</li>
+					<li class="list-inline-item h6 mb-0"><i class="fas fa-globe text-info me-2"></i>Activ/Disponibil</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Responsive menu -->
+	<div class="container mt-n4">
+		<div class="row">
+			<div class="col-12">
+				<!-- Advanced filter responsive toggler START -->
+				<!-- Divider -->
+				<hr class="d-xl-none">
+				<div class="col-12 col-xl-3 d-flex justify-content-between align-items-center">
+					<a class="h6 mb-0 fw-bold d-xl-none" href="#">Meniu</a>
+					<button class="btn btn-primary d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+						<i class="fas fa-sliders-h"></i>
+					</button>
+				</div>
+				<!-- Advanced filter responsive toggler END -->
+			</div>
+		</div>
+	</div>
+	<!-- Begining of test cards -->
+	<div class="container">
+		<div class="row">
+			<!-- Main content START -->
+			<div class="col-xl-12">
+				<!-- Test item START -->
+				<div class="card border">
+					<div class="card-body">
+						<!-- Step content START -->
+						<div class="card bg-transparent border rounded-3 mb-1">
+			                <div id="stepper" class="bs-stepper stepper-outline">
+			                  <!-- Card header -->
+			                  <div class="card-header bg-light border-bottom px-lg-5">
+			                    <!-- Step Buttons START -->
+			                    <div class="bs-stepper-header" role="tablist">
+			                      <!-- Step 1 -->
+			                      {% for question_num in question_counter %}
+			                      <div class="step" data-target="#step-{{ question }}">
+			                        <div class="d-grid text-center align-items-center">
+			                          <button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger{{ question }}" aria-controls="step-{{ question }}">
+			                            <span class="bs-stepper-circle">{{ question_num }}</span>
+			                          </button>
+			                        </div>
+			                      </div>
+			                      {% endfor %}   
+			                    </div>
+			                    <!-- Step Buttons END -->
+			                  </div>
+			          
+			                  <!-- Card body START -->
+			                  <div class="card-body">
+			                    <h6 class="text-danger text-end mb-0"><i class="bi bi-clock-history me-2"></i>Time Left: {{ test.duration }}</h6>
+
+			                    <!-- Step content START -->
+			                    <div class="bs-stepper-content">
+			                      <form>
+			          				{% for question in questions %}
+			                        <!-- Step 1 content START -->
+			                        <div id="step-{{ question.order }}" role="tabpanel" class="content fade" aria-labelledby="steppertrigger{{ question.order }}">
+			                          <!-- Title -->
+			                          <h4>{{ question.label }}</h4>
+			          
+			                          <hr> <!-- Divider -->
+			                          <div class="vstack gap-2">
+			                            <!-- Feed ques item -->
+			                           <div>
+			                             <input type="radio" class="btn-check" name="ques" id="option1">
+			                             <label class="btn btn-outline-primary w-100" for="option1">We have cybersecurity insurance coverage</label>
+			                           </div>
+			                           <!-- Feed ques item -->
+			                           <div>
+			                             <input type="radio" class="btn-check" name="ques" id="option2">
+			                             <label class="btn btn-outline-primary w-100" for="option2">Our dedicated staff will protect us</label>
+			                           </div>
+			                           <!-- Feed ques item -->
+			                           <div>
+			                             <input type="radio" class="btn-check" name="ques" id="option3">
+			                             <label class="btn btn-outline-primary w-100" for="option3">We give regular training for best practices</label>
+			                           </div>
+			                           <!-- Feed ques item -->
+			                           <div>
+			                             <input type="radio" class="btn-check" name="ques" id="option4">
+			                             <label class="btn btn-outline-primary w-100" for="option4">Third-party vendor protection</label>
+			                           </div>
+			                          </div>
+
+			                          <!-- Step 1 button -->
+			                          <div class="d-flex justify-content-center mt-3">
+			                            <button type="button" class="btn btn-primary next-btn mb-0">Următoarea întrebare</button>
+			                          </div>
+			                       
+			                        </div>
+			                        <!-- Step 1 content END -->
+			          				{% endfor %}
+
+			                        
+			          
+			                      </form>
+			                    </div>
+			                  </div>
+			                  <!-- Card body END -->
+			                </div>
+			              </div>		
+						</div>		
+					</div>
+					<!-- Course item END -->
+	</div>
+</section>
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+{% include 'footer.html' %}
+
+<!-- Back to top -->
+<div class="back-top"><i class="bi bi-arrow-up-short position-absolute top-50 start-50 translate-middle"></i></div>
+
+</body>
+</html>
+{% endblock content %}

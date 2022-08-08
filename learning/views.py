@@ -1,8 +1,142 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
-# Create your views here.
+import random
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 
 
-# Create your views here.
-class CoursesListView(TemplateView):
-    template_name = 'courses_list.html'
+from .models import Course, Chapter, Lecture, Test, Card, BOXES
+from .utils import get_course, get_chapters, get_lectures, get_course_duration, get_courses_details, check_access, get_index_from_zip, get_test
+from .forms import CardCheckForm
+
+def course_list(request):
+    courses_details = get_courses_details()
+    courses = tuple(courses_details.items())
+
+    page = request.GET.get("page", 1)
+    paginator = Paginator(courses, 10)
+
+
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
+    context = {
+        'courses_details': courses_details,
+        'page_obj': page_obj,
+    }
+    return render(request, 'learning/course_list.html', context)
+
+
+def course_detail(request, pk):
+    user = request.user.id
+    course = get_course(pk)
+    chapters = get_chapters(course)
+    lectures = get_lectures(chapters)
+    duration = get_course_duration(lectures)
+    flashcards = Card.objects.filter(course=course.id).order_by("box", "-date_created")
+
+    boxes = []
+    for box_num in BOXES:
+        card_count = Card.objects.filter(course=course.id).filter(box=box_num).count()
+        boxes.append({
+            "number": box_num,
+            "card_count": card_count,
+        })
+
+    box_num = request.GET.get('box_num')
+    cards_by_box = flashcards.filter(box=box_num)
+
+    if cards_by_box:
+        card = random.choice(cards_by_box)
+    else:
+        card = None
+
+    context = {
+        'course': course,
+        'chapters': chapters,
+        'lectures': lectures,
+        'duration': duration,
+        'flashcards': flashcards,
+        'boxes': boxes,
+        'card': card,
+    }
+
+    if request.method == "POST":
+        form = CardCheckForm(request.POST)
+   
+        if form.is_valid():
+            card = get_object_or_404(Card, id=form.cleaned_data["card_id"])
+            card.move(form.cleaned_data["solved"])
+    
+        return redirect(request.META.get("HTTP_REFERER"))
+
+    return render(request, 'learning/course_detail.html', context)
+
+
+    # if check_access(user, pk) == True:
+    #     return render(request, 'learning/course_detail.html', context)
+    # else:
+    #     return redirect('course_unavailable')
+
+
+def course_unavailable(request):
+    return render(request, 'learning/course_unavailable.html')
+
+
+def lecture_detail(request, pk):
+    course_id = request.GET.get('course')
+    course = get_course(course_id)
+    chapters = get_chapters(course)
+    lectures = get_lectures(chapters)
+    duration = get_course_duration(lectures)
+    lecture = Lecture.objects.get(id=pk)
+
+    if lecture.zip_file:
+        index = get_index_from_zip(lecture.id)
+    else:
+        index = 'None'
+
+    context = {
+        'course': course,
+        'chapters': chapters,
+        'lectures': lectures,
+        'duration': duration,
+        'lecture': lecture,
+        'index': index,
+    }
+    return render(request, 'learning/lecture_detail.html', context)
+
+def test_list(request):
+    test_list = Test.objects.all()
+    page = request.GET.get("page", 1)
+    paginator = Paginator(test_list, 10)
+
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
+    context = {
+        'test_list': test_list,
+        'page_obj': page_obj,
+    }
+    return render(request, 'learning/test_list.html', context)
+
+def test_detail(request, pk):
+    test, questions = get_test(pk)
+    question_counter = range(1, test.questions_count+1)
+    context = {
+        "test": test,
+        "questions": questions,
+        "question_counter": question_counter,
+    }
+    return render(request, 'learning/test_detail.html', context)
+
+
+
+

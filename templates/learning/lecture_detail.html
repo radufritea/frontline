@@ -1,0 +1,249 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+{% include "nav.html" %}
+<!-- Header START -->
+
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+<!-- =======================
+Page content START -->
+<section class="pt-0">
+	<div class="container">
+		<div class="row g-lg-5">
+			<!-- Main content START -->
+			<div class="col-lg-8">
+				<div class="row g-4">
+					{% if lecture.lecture_type_id is 1 %}
+					<!-- Course video START -->
+					<div class="col-12">
+						<div style="padding:56.25% 0 0 0;position:relative;">
+							<iframe src="https://player.vimeo.com/video/{{ lecture.url }}?h=1d1ad10b9d&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Introducere și repere botanice"></iframe>
+						</div>
+						
+						<div>
+							<h5 class="mt-3 mt-lg-3 mb-4">{{ lecture.name }}</h5>
+						</div>
+					</div>
+					
+					{% elif lecture.lecture_type_id is 2 %}
+					<div class="col-12">
+						<div>{{ lecture.content | safe }}</div>
+						
+						<div>
+							<h5 class="mt-3 mt-lg-3 mb-4">{{ lecture.name }}</h5>
+						</div>
+					</div>
+
+					{% elif lecture.lecture_type_id is 3 %}
+					<div class="col-12">
+						<div style="padding:56.25% 0 0 0;position:relative;">
+							<iframe src="{{ lecture.pdf_file.url }}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+						</div>
+						<div>
+							<h5 class="mt-3 mt-lg-3 mb-4">{{ lecture.name }}</h5>
+						</div>
+					</div>
+					{% elif lecture.lecture_type_id is 4 %}
+					<div class="col-12">
+						<div style="padding:56.25% 0 0 0;position:relative;">
+							<iframe src="{{ MEDIA_URL }}{{index}}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+						</div>
+						<div>
+							<h5 class="mt-3 mt-lg-3 mb-4">{{ lecture.name }}</h5>
+						</div>
+					</div>
+					{% endif %}
+					<hr>	
+					<!-- Course title START -->
+					<div class="col-12">
+						<!-- Title -->
+						<h1>{{ course }}</h1>
+					</div>
+					<!-- Course title END -->
+
+					<!-- Course detail START -->
+					<div class="col-12">
+						<!-- Tabs START -->
+						<ul class="nav nav-pills nav-pills-bg-soft px-3" id="course-pills-tab" role="tablist">
+							<!-- Tab item -->
+							<li class="nav-item me-2 me-sm-4" role="presentation">
+								<button class="nav-link mb-0 active" id="course-pills-tab-1" data-bs-toggle="pill" data-bs-target="#course-pills-1" type="button" role="tab" aria-controls="course-pills-1" aria-selected="true">Prezentare</button>
+							</li>
+							<!-- Tab item -->
+							<li class="nav-item me-2 me-sm-4" role="presentation">
+								<button class="nav-link mb-0" id="course-pills-tab-2" data-bs-toggle="pill" data-bs-target="#course-pills-2" type="button" role="tab" aria-controls="course-pills-2" aria-selected="false">Flashcards</button>
+							</li>
+						</ul>
+						<!-- Tabs END -->
+
+						<!-- Tab contents START -->
+						<div class="tab-content pt-4 px-3" id="course-pills-tabContent">
+							<!-- Prezentare START -->
+							<div class="tab-pane fade show active" id="course-pills-1" role="tabpanel" aria-labelledby="course-pills-tab-1">
+								<!-- Course detail START -->
+								<h5 class="mb-3">Course Description</h5>
+								<p class="mb-3">Welcome to the <strong> Digital Marketing Ultimate Course Bundle - 12 Courses in 1 (Over 36 hours of content)</strong></p>
+								<p class="mb-3">In this practical hands-on training, you’re going to learn to become a digital marketing expert with this <strong> ultimate course bundle that includes 12 digital marketing courses in 1!</strong></p>
+								<p class="mb-3">If you wish to find out the skills that should be covered in a basic digital marketing course syllabus in India or anywhere around the world, then reading this blog will help. Before we delve into the advanced <strong><a href="#" class="text-reset text-decoration-underline">digital marketing course</a></strong> syllabus, let’s look at the scope of digital marketing and what the future holds.</p>
+								<p class="mb-0">We focus a great deal on the understanding of behavioral psychology and influence triggers which are crucial for becoming a well rounded Digital Marketer. We understand that theory is important to build a solid foundation, we understand that theory alone isn’t going to get the job done so that’s why this course is packed with practical hands-on examples that you can follow step by step.</p>
+								
+								<!-- List content -->
+								<h5 class="mt-4">What you’ll learn</h5>
+
+								<div class="row mb-3">
+									<div class="col-md-6">
+										<ul class="list-group list-group-borderless">
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Digital marketing course introduction</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Customer Life cycle</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>What is Search engine optimization(SEO)</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Facebook ADS</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Facebook Messenger Chatbot</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Search engine optimization tools</li>
+										</ul>
+									</div>
+
+									<div class="col-md-6">
+										<ul class="list-group list-group-borderless">
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Why SEO</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>URL Structure</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Featured Snippet</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>SEO tips and tricks</li>
+											<li class="list-group-item h6 fw-light d-flex mb-0"><i class="fas fa-check-circle text-success me-2"></i>Google tag manager</li>
+										</ul>
+									</div>
+								</div>
+
+								<p class="mb-0">As it so contrasted oh estimating instrument. Size like body someone had. Are conduct viewing boy minutes warrant the expense? Tolerably behavior may admit daughters offending her ask own. Praise effect wishes change way and any wanted. Lively use looked latter regard had. Do he it part more last in. </p>
+								<!-- Course detail END -->
+
+							</div>
+							<!-- Content END -->
+
+							<!-- Flashcards START -->
+							<div class="tab-pane fade" id="course-pills-2" role="tabpanel" aria-labelledby="course-pills-tab-2">
+								
+
+							</div>
+							<!-- Content END -->
+
+						</div>
+						<!-- Tab contents END -->
+					</div>
+					<!-- Course detail END -->
+				</div>
+			</div>
+			<!-- Main content END -->
+
+			<!-- Right sidebar START -->
+			<div class="col-lg-4">
+				<div class="row g-4">
+					<!-- Responsive offcanvas body START -->
+					<nav class="navbar navbar-light navbar-expand-lg mx-0">
+						<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+							<div class="offcanvas-header bg-dark">
+								<h5 class="offcanvas-title text-white" id="offcanvasSidebarLabel">Cuprinsul cursului</h5>
+								<button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+							</div>
+							<div class="offcanvas-body p-3 p-lg-0">
+								<div class="col-12">
+									<!-- Accordion START -->
+									<div class="accordion accordion-icon accordion-bg-light" id="accordionExample2">
+										<!-- Item -->
+										{% for chapter in chapters %}
+										<div class="accordion-item mb-3">
+											<h6 class="accordion-header font-base" id="heading-1">
+												<a class="accordion-button fw-bold rounded collapsed d-block" href="#collapse-1" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+													<span class="mb-0">{{ chapter }}</span> 
+													<span class="small d-block mt-1">({{ chapter.lectures.values | length }} lecții)</span> 
+												</a>
+											</h6>
+											<div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample2">
+												<div class="accordion-body mt-3">
+													<div class="vstack gap-3">
+		
+														<!-- Progress bar -->
+														<div class="overflow-hidden">
+															<div class="d-flex justify-content-between">
+																<p class="mb-1 h6">1/3 Completed</p>
+																<h6 class="mb-1 text-end">30%</h6>
+															</div>
+															<div class="progress progress-sm bg-primary bg-opacity-10">
+																<div class="progress-bar bg-primary aos" role="progressbar" data-aos="slide-right" data-aos-delay="200" data-aos-duration="1000" data-aos-easing="ease-in-out" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+																</div>
+															</div>
+														</div>
+		
+														<!-- Course lecture -->
+														{% for lecture in chapter.lectures.values %}
+														<div class="d-flex justify-content-between align-items-center">
+															<div class="position-relative d-flex align-items-center">
+																<!-- {{ chapter.lectures.values }} -->
+																{% if lecture.lecture_type_id is 1 %}
+																<a href="{% url 'lecture_detail' lecture.id %}?course={{ course.id }}" class="btn btn-danger-soft btn-round btn-lg mb-0 stretched-link position-static">
+																	<i class="fas fa-play me-0"></i>
+																</a>
+																{% elif lecture.lecture_type_id is 2 %}
+																<a href="{% url 'lecture_detail' lecture.id %}?course={{ course.id }}" class="btn btn-success-soft btn-round btn-lg mb-0 stretched-link position-static">
+																	<i class="fas fa-file me-0"></i>
+																</a>
+																</a>
+																{% elif lecture.lecture_type_id is 3 %}
+																<a href="{% url 'lecture_detail' lecture.id %}?course={{ course.id }}" class="btn btn-info-soft btn-round btn-lg mb-0 stretched-link position-static">
+																	<i class="fas fa-filepdf me-0"></i>
+																</a>
+																{% elif lecture.lecture_type_id is 4 %}
+																<a href="{% url 'lecture_detail' lecture.id %}?course={{ course.id }}" class="btn btn-warning-soft btn-round btn-lg mb-0 stretched-link position-static">
+																	<i class="fas fa-file-invoice me-0"></i>
+																</a>
+																{% endif %}
+																<span class="d-inline-block text-truncate ms-2 mb-0 h6 fw-light w-200px">{{ lecture.name }}</span>
+															</div>
+
+															<p class="mb-0 text-truncate">{{ lecture.duration }}</p>
+														</div>
+
+														{% endfor %}
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endfor %}
+									</div>
+									<!-- Accordion END -->
+								</div>
+							</div>
+						</div>
+					</nav>
+					<!-- Responsive offcanvas body END -->
+
+				</div><!-- Row End -->
+			</div>
+			<!-- Right sidebar END -->
+
+		</div><!-- Row END -->
+	</div>
+</section>
+<!-- =======================
+Page content END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+{% include 'footer.html' %}
+
+<!-- Back to top -->
+<div class="back-top"><i class="bi bi-arrow-up-short position-absolute top-50 start-50 translate-middle"></i></div>
+
+</body>
+</html>
+
+{% endblock content %}

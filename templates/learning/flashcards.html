@@ -1,0 +1,72 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load humanize %}
+{% load cards_tags %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+{% include "nav.html" %}
+
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+	
+<!-- =======================
+Main Content START -->
+<section class="pb-0 pt-4 pb-md-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+
+				<!-- Title and Info START -->
+				<div class="row">
+					<!-- Content -->
+					<div class="col-lg-9 order-1">
+						<!-- Pre title -->
+						<span>40D ago</span><span class="mx-2">|</span><div class="badge bg-success text-white">Rinita alergică</div>
+						<!-- Title -->
+						<h1 class="mt-2 mb-0 display-5">Flashcards</h1>
+						<!-- Info -->
+					</div>
+				</div>
+				<!-- Title and Info END -->
+
+
+				<!-- Quote and content START -->
+				<div class="row mt-4">
+					<!-- Content -->
+					<div class="col-12 mt-4 mt-lg-0">
+						<nav>
+							{% boxes_as_links %}
+						</nav>
+    					{% for card in flashcards %}
+    						{% ifchanged %}
+        						<h3>Seria {{ card.box }}</h3>
+        					{% endifchanged %}
+        					{% include "learning/card.html" %}
+    					{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div> <!-- Row END -->
+	</div>
+</section>
+<!-- =======================
+Main Content END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+{% include 'footer.html' %}
+
+<!-- Back to top -->
+<div class="back-top"><i class="bi bi-arrow-up-short position-absolute top-50 start-50 translate-middle"></i></div>
+
+</body>
+</html>
+
+{% endblock content %}

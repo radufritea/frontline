@@ -1,0 +1,10 @@
+<form method="post" action="{% url 'course_detail' course.id %}#target_card">
+    {% csrf_token %}
+    <input type="hidden" name="card_id" value="{{ card.id }}">
+    <input type="hidden" name="solved" value="{{ solved }}">
+    {% if solved %}
+        <input type="submit" value="✅ Știu"/>
+    {% else %}
+        <input type="submit" value="❌ Nu știu"/>
+    {% endif %}
+</form>

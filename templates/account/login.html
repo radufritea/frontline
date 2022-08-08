@@ -1,12 +1,81 @@
 {% extends '_base.html' %}
-{% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
-<form method="post">
-	{% csrf_token %}
-	{{ form|crispy }}
-	<button type="submit">Log In</button>
-</form>
-<a href={% url 'account_reset_password' %}>Am uitat parola</a>
 
+<main>
+	<section class="p-0 d-flex align-items-center position-relative overflow-hidden">
+	
+		<div class="container-fluid">
+			<div class="row">
+				<!-- left -->
+				<div class="col-12 col-lg-6 d-md-flex align-items-center justify-content-center bg-primary bg-opacity-10 vh-lg-100">
+					<div class="p-3 p-lg-5">
+						<!-- Title -->
+						<div class="text-center">
+							<h2 class="fw-bold">Bine ai venit pe platforma Frontline Solutions</h2>
+							<p class="mb-0 h6 fw-light">În fiecare zi poți învăța ceva nou.</p>
+						</div>
+						<!-- SVG Image -->
+						<img src="{% static 'assets/images/element/02.svg' %}" class="mt-5" alt="">
+					</div>
+				</div>
+
+				<!-- Right -->
+				<div class="col-12 col-lg-6 m-auto">
+					<div class="row my-5">
+						<div class="col-sm-10 col-xl-8 m-auto">
+							<!-- Title -->
+							<span class="mb-0 fs-1">👋</span>
+							<h1 class="fs-2">Intră în cont</h1>
+							<p class="lead mb-4">Te rugăm să întroduci adresa ta de email și parola pentru a te autentifica.</p>
+
+							<!-- Form START -->
+							<form method="post">
+								{% csrf_token %}
+								<!-- Email -->
+								<div class="mb-4">
+									<label for="id_login" class="form-label">Adresa de email *</label>
+									<div class="input-group input-group-lg">
+										<span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i class="bi bi-envelope-fill"></i></span>
+										<input type="email" class="form-control border-0 bg-light rounded-end ps-1" placeholder="Email" name="login" id="id_login" required>
+									</div>
+								</div>
+								<!-- Password -->
+								<div class="mb-4">
+									<label for="id_password" class="form-label">Parola *</label>
+									<div class="input-group input-group-lg">
+										<span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i class="fas fa-lock"></i></span>
+										<input type="password" name="password" class="form-control border-0 bg-light rounded-end ps-1" placeholder="parola" required id="id_password">
+									</div>
+								</div>
+								<!-- Check box -->
+								<div class="mb-4 d-flex justify-content-between mb-4">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="exampleCheck1">
+										<label class="form-check-label" for="exampleCheck1">Ține-mă minte.</label>
+									</div>
+									<div class="text-primary-hover">
+										<a href="{% url 'account_reset_password' %}" class="text-secondary">
+											<u>Ai uitat parola?</u>
+										</a>
+									</div>
+								</div>
+								<!-- Button -->
+								<div class="align-items-center mt-0">
+									<div class="d-grid">
+										<button class="btn btn-primary mb-0" type="submit">Login</button>
+									</div>
+								</div>
+							</form>
+							<!-- Form END -->
+						</div>
+					</div> <!-- Row END -->
+				</div>
+			</div> <!-- Row END -->
+		</div>
+	</section>
+<!-- Back to top -->
+<div class="back-top"><i class="bi bi-arrow-up-short position-absolute top-50 start-50 translate-middle"></i></div>
+</main>
 {% endblock content %}
