@@ -1,22 +1,46 @@
 from django.contrib import admin
 from nested_admin import NestedTabularInline, NestedModelAdmin
 
-from .models import Course, Chapter, Lecture, LectureType, CourseCategory, CoursePermissions, Card, Question, Test, Choice, UserChoice, TestInstance
+from .models import (
+    Course,
+    Chapter,
+    Lecture,
+    LectureType,
+    CourseCategory,
+    CoursePermissions,
+    Card,
+    Question,
+    Test,
+    Choice,
+    UserChoice,
+    TestInstance,
+    TestPermission,
+)
 
 
 class ChoicesInline(NestedTabularInline):
-	model = Choice
-	extra = 4
-	max_num = 4
+    model = Choice
+    extra = 4
+    max_num = 4
+
 
 class QuestionInline(NestedTabularInline):
-	model = Question 
-	inlines = [ChoicesInline,]
-	extra = 10
-	list_display = ("label", "feedback", "order",)
+    model = Question
+    inlines = [
+        ChoicesInline,
+    ]
+    extra = 10
+    list_display = (
+        "label",
+        "feedback",
+        "order",
+    )
+
 
 class TestAdmin(NestedModelAdmin):
-	inlines = [QuestionInline,]
+    inlines = [
+        QuestionInline,
+    ]
 
 
 # class UserChoiceInline(admin.TabularInline):
@@ -38,3 +62,4 @@ admin.site.register(Question)
 admin.site.register(Choice)
 admin.site.register(UserChoice)
 admin.site.register(TestInstance)
+admin.site.register(TestPermission)

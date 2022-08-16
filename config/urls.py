@@ -19,14 +19,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     # path('nested_admin', include('nested_admin')),
-    path('accounts/', include('allauth.urls')),
-    path('learning/', include('learning.urls')),
-    path('timeoff/', include('timeoff.urls')),
-    path('tinymce/', include('tinymce.urls')),
-    path('', include('pages.urls')),
+    path("accounts/", include("allauth.urls")),
+    path("learning/", include("learning.urls")),
+    path("timeoff/", include("timeoff.urls")),
+    path("tinymce/", include("tinymce.urls")),
+    path("", include("learning.urls")),
 ]
 
 if settings.DEBUG:
-     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

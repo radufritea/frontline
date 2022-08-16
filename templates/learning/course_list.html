@@ -110,7 +110,7 @@ START CURSURI ACTIVE section -->
 
 				<!-- Course Grid START -->
 				<div class="row g-4">
-					{% for key, info in courses_details.items %}
+					{% for key, info in active_courses_details.items %}
 					<!-- Card item START -->
 					<div class="col-sm-6 col-lg-4 col-xl-3">
 						<div class="card shadow h-100">
@@ -121,7 +121,7 @@ START CURSURI ACTIVE section -->
 								<!-- Badge and favorite -->
 								<div class="d-flex justify-content-between mb-2">
 									<a href="#" class="badge bg-purple bg-opacity-10 text-purple">Farmacologie</a>
-									
+
 								</div>
 								<!-- Title -->
 								<h5 class="card-title"><a href="{% url 'course_detail' key %}">{{ info.name }}</a></h5>
@@ -144,18 +144,18 @@ START CURSURI ACTIVE section -->
 				<div class="col-12">
 					<nav class="mt-4 d-flex justify-content-center" aria-label="navigation">
 						<ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
-							{% if page_obj.has_previous %}
-							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
+							{% if page_obj_active.has_previous %}
+							<li class="page-item mb-0"><a class="page-link" href="?page1={{ page_obj_active.previous_page_number }}" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
 							{% else %}
 							<li class="page-item disabled mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
 							{% endif %}
 
-							{% for page in page_obj.paginator.page_range %}
-							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.number }}">{{ page }}</a></li>
+							{% for page in page_obj_active.paginator.page_range %}
+							<li class="page-item mb-0"><a class="page-link" href="?page1={{ page_obj_active.number }}">{{ page }}</a></li>
 							{% endfor %}
 
-							{% if page_obj.has_next %}
-							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-angle-double-right"></i></a></li>
+							{% if page_obj_active.has_next %}
+							<li class="page-item mb-0"><a class="page-link" href="?page1={{ page_obj_active.next_page_number }}"><i class="fas fa-angle-double-right"></i></a></li>
 							{% else %}
 							<li class="page-item disabled mb-0"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
 							{% endif %}
@@ -247,7 +247,7 @@ START ISTORIC section -->
 
 				<!-- Course Grid START -->
 				<div class="row g-4">
-					{% for key, info in courses_details.items %}
+					{% for key, info in history_courses_details.items %}
 					<!-- Card item START -->
 					<div class="col-sm-6 col-lg-4 col-xl-3">
 						<div class="card shadow h-100">
@@ -280,18 +280,18 @@ START ISTORIC section -->
 				<div class="col-12">
 					<nav class="mt-4 d-flex justify-content-center" aria-label="navigation">
 						<ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
-							{% if page_obj.has_previous %}
-							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
+							{% if history_page_obj.has_previous %}
+							<li class="page-item mb-0"><a class="page-link" href="?page2={{ history_page_obj.previous_page_number }}" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
 							{% else %}
 							<li class="page-item disabled mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
 							{% endif %}
 
-							{% for page in page_obj.paginator.page_range %}
-							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.number }}">{{ page }}</a></li>
+							{% for page in history_page_obj.paginator.page_range %}
+							<li class="page-item mb-0"><a class="page-link" href="?page2={{ history_page_obj.number }}">{{ page }}</a></li>
 							{% endfor %}
 
-							{% if page_obj.has_next %}
-							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-angle-double-right"></i></a></li>
+							{% if history_page_obj.has_next %}
+							<li class="page-item mb-0"><a class="page-link" href="?page2={{ history_page_obj.next_page_number }}"><i class="fas fa-angle-double-right"></i></a></li>
 							{% else %}
 							<li class="page-item disabled mb-0"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
 							{% endif %}

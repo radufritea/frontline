@@ -69,7 +69,7 @@ Page content START -->
 							<div class="tab-pane fade show active" id="course-pills-1" role="tabpanel" aria-labelledby="course-pills-tab-1">
 								<!-- Course detail START -->
 								{{ course.presentation | safe }}
-								
+
 								<!-- List content -->
 								<h5 class="mt-4">Ce veți învăța</h5>
 								<ul class="list-group list-group-borderless mb-3">
@@ -90,8 +90,8 @@ Page content START -->
 									<div class="accordion-item mb-3">
 										<h6 class="accordion-header font-base" id="heading-1">
 											<button class="accordion-button fw-bold rounded d-sm-flex d-inline-block collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
-												{{ chapter }} 
-												<span class="small ms-0 ms-sm-2">({{ chapter.lectures.values | length }} lecții)</span> 
+												{{ chapter }}
+												<span class="small ms-0 ms-sm-2">({{ chapter.lectures.values | length }} lecții)</span>
 											</button>
 										</h6>
 										<div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample2">
@@ -100,7 +100,7 @@ Page content START -->
 												<!-- Lectie -->
 												<div class="d-flex justify-content-between align-items-center">
 													<div class="position-relative d-flex align-items-center">
-														
+
 														{% if lecture.lecture_type_id is 1 %}
 														<a href="{% url 'lecture_detail' lecture.id %}?course={{ course.id }}" class="btn btn-danger-soft btn-round btn-lg mb-0 stretched-link position-static">
 															<i class="fas fa-play me-0"></i>
@@ -119,7 +119,7 @@ Page content START -->
 													<p class="mb-0">{{ lecture.duration }}</p>
 												</div>
 												<hr> <!-- Divider -->
-												
+
 												{% endfor %}
 											</div>
 										</div>
@@ -133,19 +133,19 @@ Page content START -->
 							<div class="tab-pane fade" id="course-pills-3" role="tabpanel" aria-labelledby="course-pills-tab-3">
 								<!-- Course detail START -->
 								<h5 class="mb-3">Flashcards</h5>
-							
+
 								<p class="mb-3">
-									Flashcardurile sunt un instrument extrem de eficient de învățare. Folosindu-le poți să <strong>reduci semnificativ durata necesară pentru fixarea informațiilor</strong>, dar și să-ți <strong>crești retenția pe termen lung</strong>. 
+									Flashcardurile sunt un instrument extrem de eficient de învățare. Folosindu-le poți să <strong>reduci semnificativ durata necesară pentru fixarea informațiilor</strong>, dar și să-ți <strong>crești retenția pe termen lung</strong>.
 									Diferența principală între a citi sau a urmări un clip video, pe de o parte, și a folosi flashcards, este că flashcardurile te forțează să-ți amintești. Tocmai acest efort de memorie ne ajută să fixăm mai rapid o informație nouă în "baza noastră de date". </p>
-									
+
 								<p class="mb-3">
-									Fiecare flashcard este o întrebare la care trebuie să încerci să răspunzi în minte. După ce ai formulat răspunsul mental, apasă pe butonul de verificare pentru a afișa răspunsul corect. Dacă răspunsul din mintea ta corespunde cu răspunsul afișat, apasă butonul "Știu" pentru a confirma, iar dacă nu corespunde, atunci apasă pe butonul "Nu știu". 
+									Fiecare flashcard este o întrebare la care trebuie să încerci să răspunzi în minte. După ce ai formulat răspunsul mental, apasă pe butonul de verificare pentru a afișa răspunsul corect. Dacă răspunsul din mintea ta corespunde cu răspunsul afișat, apasă butonul "Știu" pentru a confirma, iar dacă nu corespunde, atunci apasă pe butonul "Nu știu".
 									<strong>Dacă ai răspuns corect, flashcardul este mutat în seria următoare.</strong>
 									<strong>Dacă ai răspuns greșit, flashcardul este mutat înapoi în prima serie.</strong></p>
-						
+
 								<p class="mb-3">
 									Pentru cele mai bune rezultate, trebuie să duci toate flashcardurile din seria 1 în seria 5, adică să bifezi de 5 ori că știi răspunsul corect. </p>
-								
+
 								<p class="mb-3">
 									Îți recomandăm să faci fiecare serie în zile diferite sau cel puțin la distanță de câteva ore. Această distanțare crește eficiența memorării pe termen lung.</p>
 
@@ -194,7 +194,7 @@ Page content START -->
 								<div class="card-img-overlay d-flex align-items-start flex-column p-3">
 									<!-- Video button and link -->
 									<div class="m-auto">
-										<a href="https://www.youtube.com/embed/tXHviS-4ygo" class="btn btn-lg text-danger btn-round btn-white-shadow mb-0" data-glightbox="" data-gallery="course-video">
+										<a href="#" class="btn btn-lg text-danger btn-round btn-white-shadow mb-0" data-glightbox="" data-gallery="course-video">
 											<i class="fas fa-play"></i>
 										</a>
 									</div>
@@ -226,7 +226,7 @@ Page content START -->
 								</li>
 								<li class="list-group-item d-flex justify-content-between align-items-center">
 									<span class="h6 fw-light mb-0"><i class="fas fa-fw fa-medal text-primary"></i>Certificat</span>
-									<span>Nu</span>	
+									<span>Nu</span>
 								</li>
 							</ul>
 						</div>
@@ -262,6 +262,6 @@ Page content END -->
 </script>
 
 </body>
-</html>	
+</html>
 
 {% endblock content %}
