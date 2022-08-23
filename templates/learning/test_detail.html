@@ -64,18 +64,18 @@
 			                    <div class="bs-stepper-header" role="tablist">
 			                      <!-- Step 1 -->
 			                      {% for question_num in question_counter %}
-			                      <div class="step" data-target="#step-{{ question }}">
+			                      <div class="step" data-target="#step-{{ question_num }}">
 			                        <div class="d-grid text-center align-items-center">
 			                          <button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger{{ question }}" aria-controls="step-{{ question }}">
 			                            <span class="bs-stepper-circle">{{ question_num }}</span>
 			                          </button>
 			                        </div>
 			                      </div>
-			                      {% endfor %}   
+			                      {% endfor %}
 			                    </div>
 			                    <!-- Step Buttons END -->
 			                  </div>
-			          
+
 			                  <!-- Card body START -->
 			                  <div class="card-body">
 			                    <h6 class="text-danger text-end mb-0"><i class="bi bi-clock-history me-2"></i>Time Left: {{ test.duration }}</h6>
@@ -87,50 +87,42 @@
 			                        <!-- Step 1 content START -->
 			                        <div id="step-{{ question.order }}" role="tabpanel" class="content fade" aria-labelledby="steppertrigger{{ question.order }}">
 			                          <!-- Title -->
-			                          <h4>{{ question.label }}</h4>
-			          
-			                          <hr> <!-- Divider -->
-			                          <div class="vstack gap-2">
-			                            <!-- Feed ques item -->
-			                           <div>
-			                             <input type="radio" class="btn-check" name="ques" id="option1">
-			                             <label class="btn btn-outline-primary w-100" for="option1">We have cybersecurity insurance coverage</label>
-			                           </div>
-			                           <!-- Feed ques item -->
-			                           <div>
-			                             <input type="radio" class="btn-check" name="ques" id="option2">
-			                             <label class="btn btn-outline-primary w-100" for="option2">Our dedicated staff will protect us</label>
-			                           </div>
-			                           <!-- Feed ques item -->
-			                           <div>
-			                             <input type="radio" class="btn-check" name="ques" id="option3">
-			                             <label class="btn btn-outline-primary w-100" for="option3">We give regular training for best practices</label>
-			                           </div>
-			                           <!-- Feed ques item -->
-			                           <div>
-			                             <input type="radio" class="btn-check" name="ques" id="option4">
-			                             <label class="btn btn-outline-primary w-100" for="option4">Third-party vendor protection</label>
-			                           </div>
-			                          </div>
+			                        	<h4>{{ question.label }}</h4>
+
+			                        	<hr> <!-- Divider -->
+										<div class="vstack gap-2">
+											<!-- Feed ques item -->
+											{% for key, choices in choices.items %}
+											{% if key is question.id %}
+												{% for choice in choices %}
+												<div>
+													<input type="radio" class="btn-check" name="ques" id="{{ choice.id }}">
+													<label class="btn btn-outline-primary w-100" for="{{ choice.id }}">{{ choice }}</label>
+												</div>
+												{% endfor %}
+											{% endif %}
+											{% endfor %}
+
+										</div>
 
 			                          <!-- Step 1 button -->
 			                          <div class="d-flex justify-content-center mt-3">
 			                            <button type="button" class="btn btn-primary next-btn mb-0">Următoarea întrebare</button>
 			                          </div>
-			                       
+
 			                        </div>
 			                        <!-- Step 1 content END -->
 			          				{% endfor %}
 
-			                        
-			          
+
+
 			                      </form>
 			                    </div>
 			                  </div>
 			                  <!-- Card body END -->
 			                </div>
-			              </div>		
-						</div>		
+			              </div>
+						</div>
 					</div>
 					<!-- Course item END -->
 	</div>

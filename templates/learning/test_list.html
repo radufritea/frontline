@@ -96,40 +96,40 @@ Page content START -->
 						<!-- Table body START -->
 						<tbody>
 							<!-- Test item -->
-							{% for test in test_list %}
+							{% for activ in test_list %}
 							<tr>
 								<!-- Test image and title -->
 								<td>
 									<div class="d-flex align-items-center">
 										<!-- Image -->
 										<div class="avatar avatar-sm me-2">
-											<img src="{{ test.thumbnail.url }}" class="rounded" alt="">
+											<img src="{{ activ.test.thumbnail.url }}" class="rounded" alt="">
 										</div>
 										<div>
 											<!-- Title -->
-											<h6 class="mb-0"><a href="{% url 'test_detail' test.id %}">{{ test.name }}</a></h6>
+											<h6 class="mb-0"><a href="{% url 'test_detail' activ.test.id %}">{{ activ.test.name }}</a></h6>
 										</div>
 									</div>
 								</td>
 
 								<!-- Permission interval -->
 								<td>
-									<h6 class="table-responsive-title mt-2 mt-md-0 mb-0"><a href="#">15.08.2022 -- 17.08.2022</a></h6>
+									<h6 class="table-responsive-title mt-2 mt-md-0 mb-0"><a href="#">{{ activ.start_date | date:"d M" }} -- {{ activ.end_date | date:"d M" }}</a></h6>
 								</td>
 
 								<!-- Test duration -->
-								<td>{{ test.duration }}</td>
+								<td>{{ activ.test.duration }}</td>
 
 								<!-- Status -->
 								<td>Activ/Disponibil</td>
-								
+
 								<!-- Score -->
 								<td>-</td>
 
 								<!-- Action -->
 								<!-- If test available: action = "start test" -->
 								<td>
-									<a href="#" class="btn btn-success-soft btn-round mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Dă testul"><i class="far fa-envelope"></i></a>
+									<a href="{% url 'test_detail' activ.test.id %}" class="btn btn-success-soft btn-round mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Dă testul"><i class="far fa-envelope"></i></a>
 								</td>
 								<!-- Elif score available: action = 'view score' -->
 
@@ -149,11 +149,21 @@ Page content START -->
 					<!-- Pagination -->
 					<nav class="d-flex justify-content-center mb-0" aria-label="navigation">
 						<ul class="pagination pagination-sm pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
-							<li class="page-item mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#">1</a></li>
-							<li class="page-item mb-0 active"><a class="page-link" href="#">2</a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#">3</a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+							{% if page_obj.has_previous %}
+							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj_active.previous_page_number }}" tabindex="-1"><i class="fas fa-angle-left"></i></a></li>
+							{% else %}
+							<li class="page-item disabled mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
+							{% endif %}
+
+							{% for page in page_obj.paginator.page_range %}
+							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.number }}">{{ page }}</a></li>
+							{% endfor %}
+
+							{% if page_obj.has_next %}
+							<li class="page-item mb-0"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-angle-double-right"></i></a></li>
+							{% else %}
+							<li class="page-item disabled mb-0"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+							{% endif %}
 						</ul>
 					</nav>
 				</div>
@@ -220,29 +230,30 @@ Page content START -->
 						<!-- Table body START -->
 						<tbody>
 							<!-- Table item -->
+							{% for future in future_tests %}
 							<tr>
 								<!-- Course image and title -->
 								<td>
 									<div class="d-flex align-items-center">
 										<!-- Image -->
 										<div class="avatar avatar-sm me-2">
-											<img src="{% static 'assets/images/avatar/01.jpg' %}" class="rounded" alt="">
+											<img src="{{ future.test.thumbnail.url }}" class="rounded" alt="">
 										</div>
 										<div>
 											<!-- Title -->
-											<h6 class="mb-0"><a href="#">Afecțiuni digestive inferioare</a></h6>
+											<h6 class="mb-0"><a href="{% url 'test_detail' future.test.id %}">{{ future.test.name }}</a></h6>
 										</div>
 									</div>
 								</td>
 
 								<!-- Access interval -->
 								<td>
-									<h6 class="table-responsive-title mt-2 mt-md-0 mb-0"><a href="#">15.08.2022 -- 17.08.2022<</a></h6>
+									<h6 class="table-responsive-title mt-2 mt-md-0 mb-0"><a href="#">{{ future.start_date | date:"d M" }} -- {{ future.end_date | date:"d M" }}</a></h6>
 								</td>
 
 								<!-- Test duration -->
 								<td>15 min</td>
-								
+
 								<!-- Status -->
 								<td>Inactiv</td>
 
@@ -254,42 +265,7 @@ Page content START -->
 									<a href="#" class="btn btn-success-soft btn-round mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Message"><i class="far fa-envelope"></i></a>
 								</td>
 							</tr>
-							<!-- Table item -->
-							<tr>
-								<!-- Course image and title -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="avatar avatar-sm me-2">
-											<img src="{% static 'assets/images/avatar/01.jpg' %}" class="rounded" alt="">
-										</div>
-										<div>
-											<!-- Title -->
-											<h6 class="mb-0"><a href="#">Ghid de recomandare farmaceutica</a></h6>
-										</div>
-									</div>
-								</td>
-
-								<!-- Access interval -->
-								<td>
-									<h6 class="table-responsive-title mt-2 mt-md-0 mb-0"><a href="#">15.08.2022 -- 17.08.2022</a></h6>
-								</td>
-
-								<!-- Test duration -->
-								<td>15 min</td>
-								
-								<!-- Status -->
-								<td>Inactiv</td>
-
-								<!-- Score -->
-								<td>-</td>
-
-								<!-- Table data -->
-								<td>
-									<a href="#" class="btn btn-success-soft btn-round mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Message"><i class="far fa-envelope"></i></a>
-								</td>
-							</tr>
-
+							{% endfor %}
 						</tbody>
 						<!-- Table body END -->
 					</table>
@@ -303,11 +279,21 @@ Page content START -->
 					<!-- Pagination -->
 					<nav class="d-flex justify-content-center mb-0" aria-label="navigation">
 						<ul class="pagination pagination-sm pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
-							<li class="page-item mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#">1</a></li>
-							<li class="page-item mb-0 active"><a class="page-link" href="#">2</a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#">3</a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+							{% if future_page_obj.has_previous %}
+							<li class="page-item mb-0"><a class="page-link" href="?page2={{ future_page_obj.previous_page_number }}" tabindex="-1"><i class="fas fa-angle-left"></i></a></li>
+							{% else %}
+							<li class="page-item disabled mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
+							{% endif %}
+
+							{% for page in future_page_obj.paginator.page_range %}
+							<li class="page-item mb-0"><a class="page-link" href="?page2={{ future_page_obj.number }}">{{ page }}</a></li>
+							{% endfor %}
+
+							{% if future_page_obj.has_next %}
+							<li class="page-item mb-0"><a class="page-link" href="?page2={{ future_page_obj.next_page_number }}"><i class="fas fa-angle-double-right"></i></a></li>
+							{% else %}
+							<li class="page-item disabled mb-0"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+							{% endif %}
 						</ul>
 					</nav>
 				</div>
@@ -396,7 +382,7 @@ Page content START -->
 
 								<!-- Test duration -->
 								<td>15 m</td>
-								
+
 								<!-- Status -->
 								<td>inactive</td>
 
@@ -417,15 +403,25 @@ Page content START -->
 				<!-- Pagination START -->
 				<div class="d-sm-flex justify-content-sm-between align-items-sm-center mt-4 mt-sm-3">
 					<!-- Content -->
-					<p class="mb-0 text-center text-sm-start">Showing 1 to 8 of 20 entries</p>
+					<p class="mb-0 text-center text-sm-start">Sunt afișate de la 1 la 8 din 20 de teste</p>
 					<!-- Pagination -->
 					<nav class="d-flex justify-content-center mb-0" aria-label="navigation">
 						<ul class="pagination pagination-sm pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
-							<li class="page-item mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#">1</a></li>
-							<li class="page-item mb-0 active"><a class="page-link" href="#">2</a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#">3</a></li>
-							<li class="page-item mb-0"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+							{% if history_page_obj.has_previous %}
+							<li class="page-item mb-0"><a class="page-link" href="?page3={{ history_page_obj.previous_page_number }}" tabindex="-1"><i class="fas fa-angle-left"></i></a></li>
+							{% else %}
+							<li class="page-item disabled mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-double-left"></i></a></li>
+							{% endif %}
+
+							{% for page in history_page_obj.paginator.page_range %}
+							<li class="page-item mb-0"><a class="page-link" href="?page3={{ history_page_obj.number }}">{{ page }}</a></li>
+							{% endfor %}
+
+							{% if history_page_obj.has_next %}
+							<li class="page-item mb-0"><a class="page-link" href="?page3={{ history_page_obj.next_page_number }}"><i class="fas fa-angle-double-right"></i></a></li>
+							{% else %}
+							<li class="page-item disabled mb-0"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+							{% endif %}
 						</ul>
 					</nav>
 				</div>

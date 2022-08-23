@@ -1,7 +1,9 @@
+from cgi import test
 import zipfile
 import os
 
 from datetime import timedelta, date
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from .models import Course, Chapter, Lecture, Test, Question, CoursePermissions, TestPermission
 
@@ -103,17 +105,34 @@ def get_active_tests_by_user(user):
     return active_tests
 
 
-def get_future_tests_by_user(user):
+def get_future_tests_by_user(user, page):
     future_tests = TestPermission.objects.filter(user=user, start_date__gt=today).order_by(
         "end_date"
     )
-    return future_tests
+    paginator = Paginator(future_tests, 10)
+
+    try:
+        future_page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        future_page_obj = paginator.page(1)
+    except EmptyPage:
+        future_page_obj = paginator.page(paginator.num_pages)
+    return future_tests, future_page_obj
 
 
-def get_history_tests_by_user(user):
+def get_history_tests_by_user(user, page):
     history_tests = TestPermission.objects.filter(user=user, end_date__lt=today).order_by(
         "end_date"
     )
+    paginator = Paginator(history_tests, 10)
+
+    try:
+        history_page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        history_page_obj = paginator.page(1)
+    except EmptyPage:
+        history_page_obj = paginator.page(paginator.num_pages)
+    return history_tests, history_page_obj
 
 
 def get_index_from_zip(lecture):
@@ -130,22 +149,13 @@ def get_index_from_zip(lecture):
         return "Acest exercitiu nu poate fi deschis. Va rugam sa ne sesizati aceasta eroare la adresa contact@frontlinesolutions.ro"
 
 
-def get_test(pk):
+def get_test_details(pk):
     test = Test.objects.get(pk=pk)
     questions = Question.objects.filter(test=test)
-
-    return (test, questions)
-
-
-def check_access(user, course):
-    pass
-
-
-# permissions = CoursePermissions.objects.filter(user=user).filter(course=course)
-# today = date.today()
-# if permission == None:
-# 	return False
-# else:
-# 	for permission in permissions:
-
-# 	return False
+    question_counter = range(1, test.questions_count + 1)
+    test_choices_by_question = {}
+    for question in questions:
+        choices = question.choices.all()
+        question_choices = {question.id: choices}
+        test_choices_by_question.update(question_choices)
+    return (questions, question_counter, test_choices_by_question)

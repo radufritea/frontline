@@ -1,10 +1,10 @@
 import random
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, TemplateView
+from django.views.generic import TemplateView, DetailView, ListView
 
 
-from .models import Course, Chapter, Lecture, Test, Card, BOXES
+from .models import Lecture, Test, Card, BOXES
 from .utils import (
     get_course,
     get_chapters,
@@ -13,9 +13,11 @@ from .utils import (
     get_active_courses_details,
     get_history_courses_details,
     get_active_tests_by_user,
-    check_access,
     get_index_from_zip,
-    get_test,
+    get_test_details,
+    get_active_tests_by_user,
+    get_future_tests_by_user,
+    get_history_tests_by_user,
 )
 from .forms import CardCheckForm
 
@@ -134,65 +136,72 @@ def course_detail(request, pk):
 
     return render(request, "learning/course_detail.html", context)
 
-    # if check_access(user, pk) == True:
-    #     return render(request, 'learning/course_detail.html', context)
-    # else:
-    #     return redirect('course_unavailable')
+
+class CourseUnavailable(TemplateView):
+    template_name = "learning/course_unavailable.html"
 
 
-def course_unavailable(request):
-    return render(request, "learning/course_unavailable.html")
+class LectureDetailView(DetailView):
+    model = Lecture
+    template_name = "learning/lecture_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        course_id = self.request.GET.get("course")
+        course = get_course(course_id)
+        chapters = get_chapters(course)
+        lectures = get_lectures(chapters)
+
+        if self.object.zip_file:
+            index = get_index_from_zip(self.object.id)
+        else:
+            index = "None"
+
+        context["course"] = course
+        context["chapters"] = chapters
+        context["lectures"] = get_lectures(chapters)
+        context["duration"] = get_course_duration(lectures)
+        context["index"] = index
+        return context
 
 
-def lecture_detail(request, pk):
-    course_id = request.GET.get("course")
-    course = get_course(course_id)
-    chapters = get_chapters(course)
-    lectures = get_lectures(chapters)
-    duration = get_course_duration(lectures)
-    lecture = Lecture.objects.get(id=pk)
+class TestListView(ListView):
+    template_name = "learning/test_list.html"
+    paginate_by = 10
+    context_object_name = "test_list"
 
-    if lecture.zip_file:
-        index = get_index_from_zip(lecture.id)
-    else:
-        index = "None"
+    def get_queryset(self):
+        test_list = get_active_tests_by_user(self.request.user)
+        return test_list
 
-    context = {
-        "course": course,
-        "chapters": chapters,
-        "lectures": lectures,
-        "duration": duration,
-        "lecture": lecture,
-        "index": index,
-    }
-    return render(request, "learning/lecture_detail.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        future_tests, future_page_obj = get_future_tests_by_user(
+            self.request.user, self.request.GET.get("page2")
+        )
+        history_tests, history_page_obj = get_history_tests_by_user(
+            self.request.user, self.request.GET.get("page3")
+        )
+        context.update(
+            {
+                "future_tests": future_tests,
+                "history_tests": history_tests,
+                "future_page_obj": future_page_obj,
+                "history_page_obj": history_page_obj,
+            }
+        )
 
-
-def test_list(request):
-    test_list = Test.objects.all()
-    page = request.GET.get("page", 1)
-    paginator = Paginator(test_list, 10)
-
-    try:
-        page_obj = paginator.page(page)
-    except PageNotAnInteger:
-        page_obj = paginator.page(1)
-    except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
-
-    context = {
-        "test_list": test_list,
-        "page_obj": page_obj,
-    }
-    return render(request, "learning/test_list.html", context)
+        return context
 
 
-def test_detail(request, pk):
-    test, questions = get_test(pk)
-    question_counter = range(1, test.questions_count + 1)
-    context = {
-        "test": test,
-        "questions": questions,
-        "question_counter": question_counter,
-    }
-    return render(request, "learning/test_detail.html", context)
+class TestDetailView(DetailView):
+    model = Test
+    template_name = "learning/test_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        questions, question_counter, test_choices_by_question = get_test_details(self.object.id)
+        context["questions"] = questions
+        context["question_counter"] = question_counter
+        context["choices"] = test_choices_by_question
+        return context
