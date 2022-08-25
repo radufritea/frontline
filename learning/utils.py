@@ -98,6 +98,13 @@ def get_history_courses_details(user):
     return history_courses_details
 
 
+def get_course_counter(user):
+    active_courses = get_active_courses_details(user)
+    history_courses = get_history_courses_details(user)
+    course_counter = len(active_courses.keys()) + len(history_courses.keys())
+    return course_counter
+
+
 def get_active_tests_by_user(user):
     active_tests = TestPermission.objects.filter(
         user=user, start_date__lte=today, end_date__gte=today
