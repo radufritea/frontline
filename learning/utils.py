@@ -54,7 +54,7 @@ def get_active_courses_by_user(user):
 
 def get_history_courses_by_user(user):
     history_courses = CoursePermissions.objects.filter(user=user, end_date__lte=today).order_by(
-        "end_date"
+        "-end_date"
     )
     return history_courses
 
@@ -117,7 +117,7 @@ def get_course_counter(user):
 def get_active_tests_by_user(user):
     active_tests = TestPermission.objects.filter(
         user=user, start_date__lte=today, end_date__gte=today
-    ).order_by("end_date")
+    ).order_by("-end_date")
     return active_tests
 
 
@@ -138,7 +138,7 @@ def get_future_tests_by_user(user, page):
 
 def get_history_tests_by_user(user, page):
     history_tests = TestPermission.objects.filter(user=user, end_date__lt=today).order_by(
-        "end_date"
+        "-end_date"
     )
     paginator = Paginator(history_tests, 10)
 
@@ -180,3 +180,10 @@ def get_test_details(pk):
 def get_lecture_counter(user):
     lecture_counter = ResourceAccess.objects.filter(user=user, resource_type_id=2).count()
     return lecture_counter
+
+
+def get_permission_expiration_date(user, course):
+    permission = (
+        CoursePermissions.objects.filter(user=user, course=course).order_by("-end_date").first()
+    )
+    return permission.end_date

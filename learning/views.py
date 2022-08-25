@@ -14,6 +14,7 @@ from .utils import (
     get_history_courses_details,
     get_course_counter,
     get_lecture_counter,
+    get_permission_expiration_date,
     get_active_tests_by_user,
     get_index_from_zip,
     get_test_details,
@@ -120,6 +121,7 @@ def course_detail(request, pk):
     else:
         card = None
 
+    permission_expiration_date = get_permission_expiration_date(user=request.user, course=course)
     context = {
         "course": course,
         "chapters": chapters,
@@ -128,6 +130,7 @@ def course_detail(request, pk):
         "flashcards": flashcards,
         "boxes": boxes,
         "card": card,
+        "expiration_date": permission_expiration_date,
     }
 
     if request.method == "POST":
