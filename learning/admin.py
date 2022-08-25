@@ -15,6 +15,8 @@ from .models import (
     UserChoice,
     TestInstance,
     TestPermission,
+    ResourceAccess,
+    ResourceType,
 )
 
 
@@ -63,3 +65,5 @@ admin.site.register(Choice)
 admin.site.register(UserChoice)
 admin.site.register(TestInstance)
 admin.site.register(TestPermission)
+admin.site.register(ResourceType)
+admin.site.register(ResourceAccess)

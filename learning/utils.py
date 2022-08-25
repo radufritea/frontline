@@ -5,7 +5,16 @@ import os
 from datetime import timedelta, date
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from .models import Course, Chapter, Lecture, Test, Question, CoursePermissions, TestPermission
+from .models import (
+    Course,
+    Chapter,
+    Lecture,
+    ResourceAccess,
+    Test,
+    Question,
+    CoursePermissions,
+    TestPermission,
+)
 
 today = date.today()
 
@@ -166,3 +175,8 @@ def get_test_details(pk):
         question_choices = {question.id: choices}
         test_choices_by_question.update(question_choices)
     return (questions, question_counter, test_choices_by_question)
+
+
+def get_lecture_counter(user):
+    lecture_counter = ResourceAccess.objects.filter(user=user, resource_type_id=2).count()
+    return lecture_counter

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 
 
-from .models import Lecture, Test, Card, BOXES
+from .models import Lecture, Test, Card, BOXES, ResourceAccess
 from .utils import (
     get_course,
     get_chapters,
@@ -12,8 +12,8 @@ from .utils import (
     get_course_duration,
     get_active_courses_details,
     get_history_courses_details,
-    get_history_courses_by_user,
     get_course_counter,
+    get_lecture_counter,
     get_active_tests_by_user,
     get_index_from_zip,
     get_test_details,
@@ -59,6 +59,7 @@ class HomePageView(TemplateView):
         context["page_obj_courses"] = page_obj_courses
         context["page_obj_tests"] = page_obj_tests
         context["course_counter"] = get_course_counter(self.request.user.id)
+        context["lecture_counter"] = get_lecture_counter(self.request.user.id)
         return context
 
 
@@ -94,6 +95,7 @@ def course_list(request):
 
 
 def course_detail(request, pk):
+    ResourceAccess.objects.create(user=request.user, resource=pk, resource_type_id=1)
     course = get_course(pk)
     chapters = get_chapters(course)
     lectures = get_lectures(chapters)
@@ -154,6 +156,9 @@ class LectureDetailView(DetailView):
         course = get_course(course_id)
         chapters = get_chapters(course)
         lectures = get_lectures(chapters)
+        ResourceAccess.objects.create(
+            user=self.request.user, resource=self.object.id, resource_type_id=2
+        )
 
         if self.object.zip_file:
             index = get_index_from_zip(self.object.id)
